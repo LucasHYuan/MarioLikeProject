@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class IdlePlayerState: PlayerState
 {
     protected override void OnEnter(Player player) { }
@@ -16,5 +18,5 @@ public class IdlePlayerState: PlayerState
             player.states.Change<WalkPlayerState>();
         }
     }
-
+    public override void OnContact(Player player, Collider other) { }
 }

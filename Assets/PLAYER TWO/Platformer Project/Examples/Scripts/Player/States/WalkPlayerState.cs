@@ -34,4 +34,9 @@ public class WalkPlayerState : PlayerState
         }
     }
 
+    public override void OnContact(Player player, Collider other)
+    {
+        player.PushRigidbody(other);
+    }
+
 }

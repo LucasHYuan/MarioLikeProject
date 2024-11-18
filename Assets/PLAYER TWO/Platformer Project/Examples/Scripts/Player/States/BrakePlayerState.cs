@@ -31,5 +31,6 @@ public class BrakePlayerState: PlayerState
         
     }
 
+    public override void OnContact(Player player, Collider other){}
 
 }

@@ -16,12 +16,14 @@ public class Player : Entity<Player>
 
     protected virtual void InitializeInputs() => inputs = GetComponent<PlayerInputManager>();
     protected virtual void InitializeStats() => stats = GetComponent<PlayerStatsManager>();
+    protected virtual void InitializeTag() => tag = GameTags.Player;
 
     protected override void Awake()
     {
         base.Awake();
         InitializeInputs();
         InitializeStats();
+        InitializeTag();
     }
     public virtual void Accelerate(Vector3 direction)
     {
@@ -111,5 +113,14 @@ public class Player : Entity<Player>
         verticalVelocity = Vector3.up * height;
         states.Change<FallPlayerState>();
         playerEvents.OnJump?.Invoke();
+    }
+
+    public virtual void PushRigidbody(Collider other)
+    {
+        if (!IsPointUnderStep(other.bounds.max) && other.TryGetComponent(out Rigidbody rigidbody))
+        {
+            var force = lateralVelocity * stats.current.pushForce;
+            rigidbody.velocity += force / rigidbody.mass * Time.deltaTime;
+        }
     }
 }
