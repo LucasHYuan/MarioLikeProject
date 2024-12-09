@@ -86,8 +86,9 @@ GameObject:
   - component: {fileID: 7112268325364137754}
   - component: {fileID: 2249404413970720157}
   - component: {fileID: 8536273643287224797}
+  - component: {fileID: 3135836780356406474}
   m_Layer: 0
-  m_Name: _GAME_
+  m_Name: __GAME__
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,6 +122,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa088a80696f42e47b8c212e7fae81a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnRetriesSet:
+    m_PersistentCalls:
+      m_Calls: []
+  initialRetries: 3
+  levels:
+  - locked: 0
+    scene: TestLevel
+    name: TestLevel
+    description: Play around with features of the asset
+    image: {fileID: 21300000, guid: b6c83d91877ad26418277a0d3cabbe17, type: 3}
 --- !u!114 &8536273643287224797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +153,21 @@ MonoBehaviour:
   loadingScreen: {fileID: 6919856511163760120}
   startDelay: 1
   finishDelay: 1
+--- !u!114 &3135836780356406474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040549379686658700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e79f5cf31ff7a84ebc7f93b742d3b91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
+  binaryFileExtension: data
+  fileName: save
 --- !u!1 &2574616121049017902
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -234,7 +260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3331514597068886462
 RectTransform:
   m_ObjectHideFlags: 0
@@ -341,7 +367,7 @@ Animator:
   m_GameObject: {fileID: 3675797343146755364}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 080f3b53cc598a54e8379a0421c7af26, type: 2}
+  m_Controller: {fileID: 9100000, guid: ee7cf945c0be7e546a5a7b3df194729e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -371,6 +397,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   hidenOnAwake: 0
+  normalTrigger: Normal
   hideTrigger: Hide
   showTrigger: Show
 --- !u!1 &4553188864862734541
@@ -385,7 +412,7 @@ GameObject:
   - component: {fileID: 6183919575255004736}
   - component: {fileID: 3781642425119495745}
   m_Layer: 5
-  m_Name: LoadingText
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -431,8 +458,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -445,7 +472,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 5
     m_MaxSize: 58
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1

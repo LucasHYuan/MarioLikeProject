@@ -31,6 +31,25 @@ public class GameSaver: Singleton<GameSaver>
         return list;
         
     }
+    public virtual void Save(GameData data, int index)
+    {
+        switch (mode)
+        {
+            default:
+            case Mode.Binary:
+                SaveBinary(data,index);
+                break;
+            case Mode.JSON:
+                SaveJson(data, index);
+                break;
+            case Mode.PlayerPrefs:
+                SavePlayerPrefs(data,index);
+                break;
+            case Mode.ProtoBuf:
+                break;
+                //SaveProtoBuf(index);
+        }
+    }
     public virtual GameData Load(int index)
     {
         switch (mode)
@@ -51,7 +70,7 @@ public class GameSaver: Singleton<GameSaver>
     {
         var path = GetFilePath(index);
         var formatter = new BinaryFormatter();
-        var stream = new FileStream(path, FileMode.Open);
+        var stream = new FileStream(path, FileMode.Create);
         formatter.Serialize(stream, data);
         stream.Close();
     }
