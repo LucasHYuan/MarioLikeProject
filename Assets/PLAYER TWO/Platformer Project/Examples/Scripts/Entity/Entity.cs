@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class Entity : MonoBehaviour {
     public EntityEvents entityEvents;
     public bool isGrounded { get; protected set; } = true;
-    public Vector3 velocity { get; protected set; }
+    public Vector3 velocity { get; set; }
     public float turningDragMultiplier { get; protected set; } = 1f;
     public float topSpeedMultiplier { get; protected set; } = 1f;
     public float accelerationMultiplier { get; protected set; } = 1f;
@@ -50,6 +50,11 @@ public abstract class Entity : MonoBehaviour {
         var top = position + Vector3.up * offset;
         var bottom = position + Vector3.down * offset;
         return Physics.OverlapCapsuleNonAlloc(top, bottom, overlapRadius, result);
+    }
+
+    public virtual void ApplyDamage(int amount, Vector3 origin)
+    {
+
     }
 
 }
@@ -227,14 +232,12 @@ public abstract class Entity<T>:Entity  where T: Entity<T>
     }
 
 
-    public virtual void FaceDirection(Vector3 direction, float degreesPerSpeed)
+    public virtual void FaceDirection(Vector3 direction)
     {
-        if (direction != Vector3.zero)
+        if (direction.sqrMagnitude > 0)
         {
-            var rotation = transform.rotation;
-            var rotationDelta = degreesPerSpeed * Time.deltaTime;
-            var target = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(rotation, target, rotationDelta);
+            var rotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.rotation = rotation;
         }
     }
 
@@ -245,6 +248,13 @@ public abstract class Entity<T>:Entity  where T: Entity<T>
 
     }
 
+    public virtual void SnapToGround(float force)
+    {
+        if (isGrounded && verticalVelocity.y <= 0)
+        {
+            verticalVelocity = Vector3.down * force;
+        }
+    }
 
     public virtual void Gravity(float gravity)
     {

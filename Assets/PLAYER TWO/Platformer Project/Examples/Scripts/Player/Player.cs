@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : Entity<Player>
@@ -9,14 +10,25 @@ public class Player : Entity<Player>
     public PlayerStatsManager stats { get; protected set; }
     public int jumpCounter { get; protected set; }
     public bool holding { get; protected set; }
-
-    public virtual void FaceDirectionSmooth(Vector3 direction) => FaceDirection(direction, stats.current.rotationSpeed);
+    public Health health { get; protected set; }
+    public bool onWater {get; protected set; }
+    protected Vector3 m_respawnPosition;
+    protected Quaternion m_respawnRotation;
+    public virtual void FaceDirectionSmooth(Vector3 direction) => FaceDirection(direction);
     public virtual void Decelerate() => Decelerate(stats.current.deceleration);
 
 
     protected virtual void InitializeInputs() => inputs = GetComponent<PlayerInputManager>();
     protected virtual void InitializeStats() => stats = GetComponent<PlayerStatsManager>();
     protected virtual void InitializeTag() => tag = GameTags.Player;
+    protected virtual void InitializeHealth() => health = GetComponent<Health>();
+
+    protected virtual void InitializeRespawn()
+    {
+        m_respawnPosition = transform.position;
+        m_respawnRotation = transform.rotation;
+    }
+
 
     protected override void Awake()
     {
@@ -24,6 +36,8 @@ public class Player : Entity<Player>
         InitializeInputs();
         InitializeStats();
         InitializeTag();
+        InitializeHealth();
+        InitializeRespawn();
     }
     public virtual void Accelerate(Vector3 direction)
     {
@@ -80,6 +94,7 @@ public class Player : Entity<Player>
         }
     }
 
+    public virtual void SnapToGround() => SnapToGround(stats.current.snapForce);
     public virtual void Fall()
     {
         if (!isGrounded)
@@ -121,6 +136,48 @@ public class Player : Entity<Player>
         {
             var force = lateralVelocity * stats.current.pushForce;
             rigidbody.velocity += force / rigidbody.mass * Time.deltaTime;
+        }
+    }
+
+    public virtual void Throw()
+    {
+        if (holding)
+        {
+            var force = lateralVelocity.magnitude * stats.current.throwVelocityMultiplier;
+            //TODO 
+        }
+    }
+
+    public virtual void Respawn()
+    {
+        health.Reset();
+        transform.SetPositionAndRotation(m_respawnPosition, m_respawnRotation);
+        states.Change<IdlePlayerState>();
+    }
+
+    public override void ApplyDamage(int amount, Vector3 origin)
+    {
+        if (!health.isEmpty && !health.recovering)
+        {
+            health.Damage(amount);
+            var damageDir = origin - transform.position;
+            damageDir.y = 0;
+            damageDir = damageDir.normalized;
+            FaceDirection(damageDir);
+            lateralVelocity = -transform.forward * stats.current.hurtBackwardsForce;
+
+            if (!onWater)
+            {
+                verticalVelocity = Vector3.up * stats.current.hurtUpwardForce;
+                states.Change<HurtPlayerState>();
+            }
+
+            playerEvents.OnHurt?.Invoke();
+            if (health.isEmpty)
+            {
+                Throw();
+                playerEvents.OnDie?.Invoke();
+            }
         }
     }
 }

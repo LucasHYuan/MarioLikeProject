@@ -14,7 +14,10 @@ GameObject:
   - component: {fileID: 6587682082960926825}
   - component: {fileID: 4170611997927972}
   - component: {fileID: 3692960290100489795}
+  - component: {fileID: 8315341795099473110}
   - component: {fileID: 7082224703345051117}
+  - component: {fileID: 1812106046270287382}
+  - component: {fileID: 3614573075807768756}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -63,7 +66,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9148da9dcb6b23840b51b92e268df2af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerEvents: {fileID: 0}
+  entityEvents:
+    OnGroundEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    OnGroundExit:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRailsEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRailsExit:
+      m_PersistentCalls:
+        m_Calls: []
+  playerEvents: {fileID: 3614573075807768756}
 --- !u!114 &6587682082960926825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +150,18 @@ MonoBehaviour:
     animatorLayer: 0
     toAnimationState: Idle
   animator: {fileID: 3685391185684673540}
+--- !u!114 &8315341795099473110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147597242110072492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a1ec25def509c419d36297e883d054, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!143 &7082224703345051117
 CharacterController:
   m_ObjectHideFlags: 0
@@ -160,6 +188,89 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1812106046270287382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147597242110072492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 569082801c15a1643b03e31f49e285f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initial: 3
+  max: 3
+  OnChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3614573075807768756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147597242110072492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec36f447ef5eaa44f830ee1a86be7e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnJump:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHurt:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSpin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPickup:
+    m_PersistentCalls:
+      m_Calls: []
+  OnThrow:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStompStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStompFalling:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStompLanding:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStompEnding:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLedgeGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLedgeClimbing:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAirDive:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBackflip:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGlidingStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGlidingStop:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDashEnded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &7084081297120266645
 PrefabInstance:
   m_ObjectHideFlags: 0

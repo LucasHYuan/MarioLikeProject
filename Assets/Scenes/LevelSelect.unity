@@ -264,7 +264,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -54}
-  m_SizeDelta: {x: -124, y: 360}
+  m_SizeDelta: {x: -124, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &33339273
 MonoBehaviour:
@@ -281,6 +281,7 @@ MonoBehaviour:
   focusFirstElement: 1
   card: {fileID: 3747884952936106623, guid: f70aa2cae09c63e45bc40d13e565dd58, type: 3}
   container: {fileID: 938588238}
+  m_cardList: []
 --- !u!1 &216070006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,7 +1123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
-  m_VerticalFit: 1
+  m_VerticalFit: 0
 --- !u!114 &938588240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,7 +1139,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
+    m_Top: 40
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 10

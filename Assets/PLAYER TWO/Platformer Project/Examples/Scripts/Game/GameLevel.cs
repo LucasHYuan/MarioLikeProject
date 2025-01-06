@@ -10,10 +10,10 @@ public class GameLevel
     public string description;
     public Sprite image;
 
-    public int coins { get; protected set; }
-    public float time {  get; protected set; }
+    public int coins { get; set; }
+    public float time {  get; set; }
     public static readonly int StarsPerLevel = 3;
-    public bool[] stars { get; protected set; } = new bool[StarsPerLevel];
+    public bool[] stars { get; set; } = new bool[StarsPerLevel];
 
     public virtual void LoadState(LevelData data)
     {
@@ -32,4 +32,15 @@ public class GameLevel
         return minutes.ToString("0") + ":" + second.ToString("00") + ":" + millisecond.ToString("00");
     }
 
+
+    public virtual LevelData ToData()
+    {
+        return new LevelData()
+        {
+            locked = this.locked,
+            coins = this.coins,
+            time = this.time,
+            stars = this.stars
+        };
+    }
 }
