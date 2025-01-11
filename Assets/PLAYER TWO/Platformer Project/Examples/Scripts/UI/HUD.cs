@@ -75,7 +75,7 @@ public class HUD : MonoBehaviour
             m_score.OnCoinsSet.AddListener(UpdateCoins);
             m_score.OnStarsSet.AddListener(UpdateStars);
             m_game.OnRetriesSet.AddListener(UpdateRetries);
-            m_player.health.OnChange.AddListener(UpdateHealth);
+            m_player.health.onChange.AddListener(UpdateHealth);
             Refresh();
         });
 

@@ -14,21 +14,24 @@ public class LevelPauser : Singleton<LevelPauser>
         {
             if (!paused)
             {
-                Game.LockCursor(false);
-                paused = true;
-                Time.timeScale = 0;
-                pauseScreen.SetActive(true);
-                pauseScreen?.Show();
-                OnPause?.Invoke();
+                if (canPaused)
+                {
+                    Game.LockCursor(false);
+                    paused = true;
+                    Time.timeScale = 0;
+                    pauseScreen.SetActive(true);
+                    pauseScreen?.Show();
+                    OnPause?.Invoke();
+                }
             }
-        }
-        else
-        {
-            Game.LockCursor();
-            paused = false;
-            Time.timeScale = 1;
-            pauseScreen?.Hide();
-            OnUnPause?.Invoke();
+            else
+            {
+                Game.LockCursor();
+                paused = false;
+                Time.timeScale = 1;
+                pauseScreen?.Hide();
+                OnUnPause?.Invoke();
+            }
         }
     }
 }

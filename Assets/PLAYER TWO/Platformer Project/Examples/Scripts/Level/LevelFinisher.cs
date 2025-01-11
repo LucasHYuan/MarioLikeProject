@@ -41,9 +41,7 @@ public class LevelFinisher : Singleton<LevelFinisher>
         m_pauser.Pause(false);
         m_pauser.canPaused = false;
         m_level.player.inputs.enabled = false;
-        Debug.Log("LevelFinisher::ExitRoutine::Before yield");
         yield return new WaitForSeconds(loadingDelay);
-        Debug.Log("LevelFinisher::ExitRoutine::After yield");
         Game.LockCursor(false);
         m_loader.Load(exitScene);
         OnExit?.Invoke();

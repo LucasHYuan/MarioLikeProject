@@ -4,8 +4,17 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Panel
   - Hazard
+  - Enemy
+  - Platform
+  - Pole
+  - Spring
+  - Surface/Grass
+  - Surface/Wood
+  - Surface/Metal
+  - Volume/Water
+  - Interactive/Rail
+  - Panel
   layers:
   - Default
   - TransparentFX
@@ -13,14 +22,14 @@ TagManager:
   - 
   - Water
   - UI
+  - Post Processing
   - 
-  - 
-  - 
+  - Ignore Projector
   - Camera Obstructor
-  - 
-  - 
-  - 
-  - 
+  - Ignore Ledge Hangling
+  - Ignore Ledge Climbing
+  - Unstable Surface
+  - Ignore Wall Slding
   - 
   - 
   - 

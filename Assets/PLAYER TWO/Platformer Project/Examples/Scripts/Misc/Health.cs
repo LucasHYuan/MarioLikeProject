@@ -5,28 +5,34 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
     public int initial = 3;
-    public int max = 3;
-    public UnityEvent OnChange;
+    public int max = 5;
     public float coolDown = 1f;
+    public UnityEvent onChange;
+    public UnityEvent onDamage;
+
     protected int m_currentHealth;
+    protected float m_lastDamageTime;
     public int current
     {
         get { return m_currentHealth; }
-        set
+
+        protected set
         {
             var last = m_currentHealth;
+
             if (value != last)
             {
                 m_currentHealth = Mathf.Clamp(value, 0, max);
-                OnChange?.Invoke();
+                onChange?.Invoke();
             }
         }
     }
-
     public virtual bool isEmpty => current == 0;
-    protected float m_lastDamageTime;
     public virtual bool recovering => Time.time < m_lastDamageTime + coolDown;
-    public UnityEvent onDamage;
+
+    public virtual void Set(int amount) => current = amount;
+
+    public virtual void Increase(int amount) => current += amount;
     public virtual void Damage(int amount)
     {
         if (!recovering)
@@ -36,13 +42,7 @@ public class Health : MonoBehaviour
             onDamage?.Invoke();
         }
     }
-    public void Reset()
-    {
-        current = initial;
-    }
+    public virtual void Reset() => current = initial;
 
-    protected void Awake()
-    {
-        current = initial;
-    }
+    protected virtual void Awake() => current = initial;
 }

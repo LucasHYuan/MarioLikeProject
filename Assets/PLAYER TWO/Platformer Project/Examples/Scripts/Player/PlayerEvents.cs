@@ -4,13 +4,13 @@ using UnityEngine.Events;
 
 
 [Serializable]
-public class PlayerEvents : MonoBehaviour
+public class PlayerEvents
 {
     public UnityEvent OnJump;
     public UnityEvent OnHurt;
     public UnityEvent OnDie;
     public UnityEvent OnSpin;
-    public UnityEvent OnPickup;
+    public UnityEvent OnPickUp;
     public UnityEvent OnThrow;
     public UnityEvent OnStompStarted;
     public UnityEvent OnStompFalling;

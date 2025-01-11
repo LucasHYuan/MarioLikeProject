@@ -4,12 +4,16 @@ public class BackflipPlayerState : PlayerState
 {
     protected override void OnEnter(Player player)
     {
-       
+        //player.SetJumps(1);
+        //player.playerEvents.OnJump.Invoke();
+
+        //if (player.stats.current.backflipLockMovement)
+        //{
+        //    player.inputs.LockMovementDirection();
+        //}
     }
 
-    protected override void OnExit(Player player)
-    {
-    }
+    protected override void OnExit(Player player) { }
 
     protected override void OnStep(Player player)
     {
@@ -23,9 +27,17 @@ public class BackflipPlayerState : PlayerState
         }
         else if (player.verticalVelocity.y < 0)
         {
-
+            player.Spin();
+            player.AirDive();
+            player.StompAttack();
+            player.Glide();
         }
     }
 
-    public override void OnContact(Player player, Collider other) { }
+    public override void OnContact(Player player, Collider other)
+    {
+        player.PushRigidbody(other);
+        player.WallDrag(other);
+        player.GrabPole(other);
+    }
 }

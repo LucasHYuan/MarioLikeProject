@@ -7,8 +7,12 @@ public class IdlePlayerState: PlayerState
     protected override void OnStep(Player player)
     {
         player.Gravity();
+        player.SnapToGround();
         player.Jump();
         player.Fall();
+        player.Spin();
+        player.PickAndThrow();
+        player.RegularSlopeFactor();
         player.Friction();
 
         var inputDirection = player.inputs.GetMovementDirection();
@@ -17,6 +21,10 @@ public class IdlePlayerState: PlayerState
         {
             player.states.Change<WalkPlayerState>();
         }
+        //else if (player.inputs.GetCrouchAndCraw())
+        //{
+        //    player.states.Change<CrouchPlayerState>();
+        //}
     }
     public override void OnContact(Player player, Collider other) { }
 }

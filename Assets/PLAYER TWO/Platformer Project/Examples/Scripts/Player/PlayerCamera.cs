@@ -74,7 +74,7 @@ public class PlayerCamera: MonoBehaviour
         m_cameraDistance = maxDistance;
         m_cameraTargetYaw = initialAngle;
         m_cameraTargetPitch = player.transform.rotation.eulerAngles.y;
-        m_cameraTargetPosition = player.unsizePosition + Vector3.up * heightOffset;
+        m_cameraTargetPosition = player.unsizedPosition + Vector3.up * heightOffset;
         MoveTarget();
         m_brain.ManualUpdate();
     }
@@ -118,7 +118,7 @@ public class PlayerCamera: MonoBehaviour
 
     protected virtual void HandleOffset()
     {
-        var target = player.unsizePosition + Vector3.up * heightOffset;
+        var target = player.unsizedPosition + Vector3.up * heightOffset;
         var previousPosition = m_cameraTargetPosition;
         var targetHeight = previousPosition.y;
         if(player.isGrounded || VerticalFollowingStates())

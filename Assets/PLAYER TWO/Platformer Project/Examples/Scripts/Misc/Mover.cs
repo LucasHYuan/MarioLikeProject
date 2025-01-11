@@ -36,6 +36,6 @@ public class Mover:MonoBehaviour
 
     protected void Start()
     {
-        m_initialPosition = transform.position;
+        m_initialPosition = transform.localPosition;
     }
 }

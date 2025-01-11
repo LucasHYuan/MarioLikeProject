@@ -24,7 +24,21 @@ public class LevelScore : Singleton<LevelScore>
     }
     public bool[] stars => (bool[]) m_stars.Clone();
     public float time { get; protected set; }
+    public virtual void Reset()
+    {
+        time = 0;
+        coins = 0;
 
+        if (m_level != null)
+        {
+            m_stars = (bool[])m_level.stars.Clone();
+        }
+    }
+    public virtual void CollectStar(int index)
+    {
+        m_stars[index] = true;
+        OnStarsSet?.Invoke(m_stars);
+    }
     public virtual void Consolidate()
     {
         if (m_level != null)

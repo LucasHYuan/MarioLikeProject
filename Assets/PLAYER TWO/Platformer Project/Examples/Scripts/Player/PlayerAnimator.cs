@@ -1,15 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimator: MonoBehaviour
+
+[RequireComponent(typeof(Player))]
+public class PlayerAnimator : MonoBehaviour
 {
     [System.Serializable]
     public class ForcedTransition
     {
+        [Tooltip("The index of the Player State from the Player State Manager that you want to force a transition from.")]
         public int fromStateId;
-        public int animatorLayer;
+
+        [Tooltip("The index of the layer from your Animator Controller that contains the target animation. (It's 0 if the animation is inside the 'Base Layer')")]
+        public int animationLayer;
+
+        [Tooltip("The name of the Animation State you want to play right after finishing the Player State from above.")]
         public string toAnimationState;
     }
+
+    public Animator animator;
 
     [Header("Parameters Names")]
     public string stateName = "State";
@@ -22,8 +31,6 @@ public class PlayerAnimator: MonoBehaviour
     public string isGroundedName = "Is Grounded";
     public string isHoldingName = "Is Holding";
     public string onStateChangedName = "On State Changed";
-
-
 
     [Header("Settings")]
     public float minLateralAnimationSpeed = 0.5f;
@@ -40,22 +47,10 @@ public class PlayerAnimator: MonoBehaviour
     protected int m_isHoldingHash;
     protected int m_onStateChangedHash;
 
-
-
     protected Dictionary<int, ForcedTransition> m_forcedTransitions;
+
     protected Player m_player;
-    public Animator animator;
-    
 
-
-
-    protected void Start()
-    {
-       InitializePlayer();
-       InitializeForcedTransitions();
-       InitializeParametersHash();
-       InitializeAnimatorTriggers();
-    }
     protected virtual void InitializePlayer()
     {
         m_player = GetComponent<Player>();
@@ -66,13 +61,18 @@ public class PlayerAnimator: MonoBehaviour
     {
         m_forcedTransitions = new Dictionary<int, ForcedTransition>();
 
-        foreach (var transition in forcedTransitions )
+        foreach (var transition in forcedTransitions)
         {
             if (!m_forcedTransitions.ContainsKey(transition.fromStateId))
             {
                 m_forcedTransitions.Add(transition.fromStateId, transition);
             }
         }
+    }
+
+    protected virtual void InitializeAnimatorTriggers()
+    {
+        m_player.states.events.onChange.AddListener(() => animator.SetTrigger(m_onStateChangedHash));
     }
 
     protected virtual void InitializeParametersHash()
@@ -89,20 +89,14 @@ public class PlayerAnimator: MonoBehaviour
         m_onStateChangedHash = Animator.StringToHash(onStateChangedName);
     }
 
-    protected virtual void InitializeAnimatorTriggers()
-    {
-        m_player.states.events.onChange.AddListener(() => animator.SetTrigger(m_onStateChangedHash));
-    }
-
     protected virtual void HandleForcedTransitions()
     {
         var lastStateIndex = m_player.states.lastIndex;
 
         if (m_forcedTransitions.ContainsKey(lastStateIndex))
         {
-            var layer = m_forcedTransitions[lastStateIndex].animatorLayer;
+            var layer = m_forcedTransitions[lastStateIndex].animationLayer;
             animator.Play(m_forcedTransitions[lastStateIndex].toAnimationState, layer);
-
         }
     }
 
@@ -117,15 +111,19 @@ public class PlayerAnimator: MonoBehaviour
         animator.SetFloat(m_lateralSpeedHash, lateralSpeed);
         animator.SetFloat(m_verticalSpeedHash, verticalSpeed);
         animator.SetFloat(m_lateralAnimationSpeedHash, lateralAnimationSpeed);
-        //animator.SetInteger(m_healthHash, m_player.health.current);
+        animator.SetInteger(m_healthHash, m_player.health.current);
         animator.SetInteger(m_jumpCounterHash, m_player.jumpCounter);
         animator.SetBool(m_isGroundedHash, m_player.isGrounded);
         animator.SetBool(m_isHoldingHash, m_player.holding);
-
     }
 
-    protected void LateUpdate()
+    protected virtual void Start()
     {
-        HandleAnimatorParameters();
+        InitializePlayer();
+        InitializeForcedTransitions();
+        InitializeParametersHash();
+        InitializeAnimatorTriggers();
     }
+
+    protected virtual void LateUpdate() => HandleAnimatorParameters();
 }
